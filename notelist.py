@@ -5,7 +5,7 @@ from json import loads as json_loads
 class NoteList:
     def __init__(self):
         self.value = {}
-    def put(self, key : str, value : str):
+    def set(self, key : str, value : str):
         self.value[key] = value
     def has(self, key : str) -> bool:
         if key in self.value.keys():

@@ -50,7 +50,7 @@ class Program:
             contents = self.__read_until_finish()
             note = Note(title, contents)
             note.save(self.__db_handle)
-            self.__note_list.put(note.id, note.title)
+            self.__note_list.set(note.id, note.title)
             self.__note_list.save(self.__db_handle)
         except Exception as e:
             print(e)
@@ -91,7 +91,7 @@ class Program:
             contents = self.__read_until_finish()
             note.modify(title, contents)
             note.save(self.__db_handle)
-            self.__note_list.put(note.id, note.title)
+            self.__note_list.set(note.id, note.title)
             self.__note_list.save(self.__db_handle)
         except Exception as e:
             print(e)
