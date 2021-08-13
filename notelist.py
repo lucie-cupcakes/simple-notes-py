@@ -16,6 +16,10 @@ class NoteList:
         if not self.has(key):
             raise Exception("key does not exists")
         return self.value[key]
+    def delete(self, key : str):
+        if not self.has(key):
+            raise Exception("key does not exists")
+        del self.value[key]
     def save(self, db_handle : PepinoDB):
         value_bytes = json_dumps(self.value).encode("utf-8")
         db_handle.save_entry("List", value_bytes)

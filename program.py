@@ -49,8 +49,6 @@ class Program:
             title = input("title: ")
             contents = self.__read_until_finish()
             note = Note(title, contents)
-            print(note.to_string())
-            print(note.to_json())
             note.save(self.__db_handle)
             self.__note_list.put(note.id, note.title)
             self.__note_list.save(self.__db_handle)
@@ -75,6 +73,41 @@ class Program:
             note_id = cmd_arr[1]
             note = Note.load(note_id, self.__db_handle)
             print(note.to_string())
+        except Exception as e:
+            print(e)
+    def __modify_command(self):
+        try:
+            cmd_arr = self.__cmd.split(" ")
+            if len(cmd_arr) < 2:
+                print("usage: mod <id>")
+                return
+            note_id = cmd_arr[1]
+            if not self.__note_list.has(note_id):
+                print("the note does not exists.")
+                return
+            note = Note.load(note_id, self.__db_handle)
+            print(note.to_string())
+            title = input("title: ")
+            contents = self.__read_until_finish()
+            note.modify(title, contents)
+            note.save(self.__db_handle)
+            self.__note_list.put(note.id, note.title)
+            self.__note_list.save(self.__db_handle)
+        except Exception as e:
+            print(e)
+    def __delete_command(self):
+        try:
+            cmd_arr = self.__cmd.split(" ")
+            if len(cmd_arr) < 2:
+                print("usage: del <id>")
+                return
+            note_id = cmd_arr[1]
+            if not self.__note_list.has(note_id):
+                print("the note does not exists.")
+                return
+            self.__db_handle.delete_entry(note_id)
+            self.__note_list.delete(note_id)
+            self.__note_list.save(self.__db_handle)
         except Exception as e:
             print(e)
 if __name__ == "__main__":
